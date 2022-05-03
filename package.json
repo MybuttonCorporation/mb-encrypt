@@ -1,0 +1,25 @@
+{
+  "name": "mb-encrypt",
+  "version": "1.0.3",
+  "description": "A powerful library for encrypting and decrypting data",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Mybutton Corporation",
+  "license": "MIT",
+  "homepage": "https://www.mybutton.org/",
+  "keywords": [
+    "encryption",
+    "mybutton",
+    "mb",
+    "json",
+    "encrypt",
+    "package",
+    "mbt",
+    "library"
+  ],
+  "dependencies": {
+    "math": "^0.0.3"
+  }
+}
