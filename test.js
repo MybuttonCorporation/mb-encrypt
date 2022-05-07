@@ -1,9 +1,34 @@
+const beta = require('./index.js')
+//log a word that has the same amount of letters as 'hello world' to the console
+//example:
+//@encrypted: ¸ÒÖÎÑËÃ 
+//@key: q.a.er
+//@decrypted: Hello, world!
+//algorithm to encrypt is by maths to conver System.fromCharToCode(0, char) and numberising using the key's charCodes.
+//basical mathematical equation: 
+
+const encodedMessage = beta.encrypt("definetelyandcompletelyvalidencryptedtext", "abc") //encode using abc
+console.log("encrypted message -", encodedMessage)
+const decodedmessage = beta.decrypt(encodedMessage,  "abc")
+console.log("decrypted message -", decodedmessage)
+console.log()
+
+
+
+/*
 const index = require('./index')
-const text = index.encrypt("test", "c") //where 'c' is key
+const text = index.encrypt(JSON.stringify({test: "test_value"}), "a") //where 'a' is key
 console.log("encrypted -", text)
-const text2 = index.decrypt(text, "c") //decode accordingly to the key 'c'.
+const text2 = index.decrypt(text, "a") //decode accordingly to the key 'a'.
 console.log("decrypted -", text2)
 
+
+
+const şifrelenmişYazı = index.encrypt("SUNUCU IP: 17.6.84.136", "e")
+console.log("şifrelenmiş yazı -", şifrelenmişYazı)
+const kırılmışYazı = index.decrypt(şifrelenmişYazı, "e")
+console.log("kırılmış yazı -",kırılmışYazı)
+*/
 /**
  * Algorithm Explanation:
  * 
@@ -48,4 +73,3 @@ console.log("decrypted -", text2)
  * @returns {encodedString, decodedString, error}
  * @throws {error};
  */
-

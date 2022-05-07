@@ -1,6 +1,6 @@
 {
   "name": "mb-encrypt",
-  "version": "1.0.3",
+  "version": "1.1.2",
   "description": "A powerful library for encrypting and decrypting data",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "library"
   ],
   "dependencies": {
+    "discord.js": "^12.5.1",
     "math": "^0.0.3"
   }
 }

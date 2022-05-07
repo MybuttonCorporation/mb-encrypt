@@ -28,85 +28,157 @@ const lettersByCharNumber = {
     }
     
     class moduleEncryption {
-        encrypt(text, keyChar) {
-            const textAsChar = [...text];
-            const keyAsChar = keyChar
-    
-            if (textAsChar.length === 0) {
-                throw new encryptionError("Text is empty");
-            }
-            if (keyAsChar.length === 0) {
-                throw new encryptionError("Key is empty");
-            }
-            //loop through the array of textAsChar
-            var encryptedText = ""; 
-            for (let i = 0; i < textAsChar.length; i++) {
-                
-            const value = textAsChar[i];
-            //if the value is a number just add it
-            if (typeof value == 'number') encryptedText += value;
-    
-            if (this.#containsSpecialCharacters(value)) encryptedText += value;
-    
-    
-            else {
-                    const valueAsOrder = String(value).toLocaleUpperCase().charCodeAt(0) - lettersByCharNumber.a;
-                    const keyValue = keyAsChar
-                    const keyValueAsOrder = String(keyValue).toLocaleUpperCase().charCodeAt(0) - lettersByCharNumber.a;
-                    const encryptedValue = valueAsOrder + (keyValueAsOrder);
-                    const newValueAsChar = encryptedValue;
-                    encryptedText += String.fromCharCode(newValueAsChar + lettersByCharNumber.a);
+        constructor() {
+            /**
+             * @param $text `the current text's information`
+             * @constant
+             * @version 1.2.0
+             * @since 1.2.0
+             * @memberof `this.encrypt()`
+             * 
+             * @use
+             * ```js
+             * (String) $text = {
+             * length: (int),
+             * content: (String),
+             * isEncoded: (bool)
+             * }
+             * ```
+             */
+            this.$text = {
+                length: 0,
+                content: "",
+                isEncoded: false,
+                encoded: {
+                    text: "",
+                    key: null,
+                    length: 0
                 }
-    
-            }
-            return encryptedText
+            } 
         }
-        decrypt(text, keyChar) {
-            const textAsChar = [...text];
-            const keyAsChar = keyChar
-            
-            if (textAsChar.length === 0) {
-                return new encryptionError("Text is empty");
+        /**
+         * 
+         * @param {*} string 
+         * @param {*} key 
+         * @since 1.2.0
+         * Checks if a string is encoded with a specific key
+         * ```js
+         * var string = "hello world";
+         * var key = "test-key";
+         * this.isEncoded(string, key); // if hello world is encoded with test-key, it will return true.
+         * ```
+         * 
+         */
+        isEncoded(string = "", key = "") {
+            var decode = this.decrypt(string, key);
+            if (decode.charCodeAt(0) <= 122) {
+                this.$text.isEncoded = true;
+                this.$text.content = decode;
+                this.$text.length = decode.length;
+                this.$text.encoded.text = string;
+                this.$text.encoded.key = key;
+                this.$text.encoded.length = string.length;
+                return true
             }
-            if (keyAsChar.length === 0) {
-                return new encryptionError("Key is empty");
-            }
-            //loop through the array of textAsChar
-            var decryptedText = "";
-            for (let i = 0; i < textAsChar.length; i++) {
-                const value = textAsChar[i];
-            //if the value is a number just add it
-            if (typeof value == 'number') decryptedText += value;
-            
-            if (this.#containsSpecialCharacters(value)) decryptedText += value;
-                else {
-                    require('math').E; var E = (num) => { num + num^2 - (num^2 + num^2) * num^2 / num^num};
-                    const resultAsOrder = String(value).toLocaleUpperCase().charCodeAt(0) - lettersByCharNumber.a;
-                    const keyValue = keyAsChar;
-                    const keyAsOrder = String(keyValue).toLocaleUpperCase().charCodeAt(0) - lettersByCharNumber.a;
-                    const decryptedValue = resultAsOrder - (keyAsOrder);
-                    const resolution = (x, y) => x - (y^2 + x + x*(x + y)*(x-y), y^2 - x^2 * (x-y)*(x+y))
-                    var val = resolution(decryptedChar, keyChar);
-                    const decode = (char, key) => char = char.order + ((char.order - (key.order * char.order)) * (key.order^2)) //decode the character from the original decoded letter to return the charOrderInAlphabet value of the original text string, and add +65 (letter A charCode)
-                    const decrypted_character_first = decode(val, keyChar);
-                    var decryptedChar = decrypted_character_first
-                    decryptedChar = decryptedValue;
-                    decryptedText += String.fromCharCode(decryptedChar + 65);
+            else return false
+        }
+        /**
+         * 
+         * @param {*} string 
+         * @param {*} key 
+         * @returns `encodedString`
+         * @since 1.0.0
+         * 
+         * Encrypts a string or a JSON string object with a specific key
+         * 
+         * @example const string = "hello world";
+         * const key = "test-key";
+         * const encodedString = this.encrypt(string, key);
+         * console.log(encodedString) // returns "hello world" encoded with "test-key"
+         * 
+         * @example const object = JSON.stringify({key: 'value'})
+         * const key = "test-key";
+         * const encodedString = this.encrypt(object, key);
+         * console.log(JSON.parse(encodedString)) // returns 'object' encoded with "test-key"
+         */
+        encrypt(string, key) {
+            var keyText = key;
+            if (string.length != key.length) {
+                var lng_for = 0;
+                if (string.length > key.length) {
+                    lng_for= string.length - key.length;
+                }
+                else lng_for = 0;
+                for (i = 0; i < lng_for || i == lng_for; i++) {
+                    keyText += "a";
                 }
             }
-            return decryptedText
+                const text = [...string];
+                const keyChars = [...keyText];
+                var i = 0;
+                var encryptedText = "";
+                text.forEach($char => {
+                    const KeyChar = keyChars[i];
+                    const KeyCharCode = KeyChar.charCodeAt(0);
+                    const CharCode = $char.charCodeAt(0);
+                    const encode = (x, y) => {return ((x + y) - (x / y))}
+                    const newCharCode = encode(CharCode, KeyCharCode);
+                    encryptedText += String.fromCharCode(newCharCode);
+                    i++
+                })
+                return encryptedText;
+        
+            
         }
-        #containsSpecialCharacters(str){
-            var regex = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
-            return regex.test(str);
-        }
-        #letterInAlphabeticalOrder(char = ""){
-            const value = char.toLocaleUpperCase().charCodeAt(0);
-            const valueAsNumber = value - lettersByCharNumber.a + 1;
-            return valueAsNumber;
+                /**
+         * 
+         * @param {*} string 
+         * @param {*} key 
+         * @returns `decodedString`
+         * @since 1.0.0
+         * 
+         * Decrypts a string or a JSON string object with a specific key
+         * 
+         * @example const string = "AHJDYHEJH";
+         * const key = "test-key";
+         * const decodedString = this.decrypt(string, key);
+         * console.log(decodedString) // returns "AHJDYHEJH" decoded with "test-key"
+         * 
+         * @example const object = "{\"GJDKDHJJD\": \"JHKDFJKSH\"}";
+         * const key = "test-key";
+         * const decodedString = this.decrypt(object, key);
+         * console.log(JSON.parse(decodedString)) // returns 'object' encoded with "test-key"
+         */
+        decrypt(string = "", key = "") {
+            var keyText = key;
+            if (string.length != key.length) {
+                var lng_for = 0;
+                if (string.length > key.length) {
+                    lng_for= string.length - key.length;
+                }
+                else lng_for = 0;
+                for (i = 0; i < lng_for; i++) {
+                    keyText += "a";
+                }
+            }
+                const text = [...string];
+                const keyChars = [...keyText];
+                var i = 0;
+                var decryptedText = "";
+                text.forEach($char => {
+                    const KeyChar = keyChars[i];
+                    const KeyCharCode = KeyChar.charCodeAt(0);
+                    const CharCode = $char.charCodeAt(0);
+                    const encode = (x, y) => {return ((x - y) + (x / y))}
+                    const newCharCode = encode(CharCode, KeyCharCode);
+                    decryptedText += String.fromCharCode(newCharCode);
+                    i++
+                })
+                return decryptedText;
+        
+            
         }
     }
-    
     class encryptionError extends Error {
         constructor(string) {
             super(string);

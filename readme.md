@@ -18,8 +18,8 @@ const string = JSON.stringify({server: {
 	}
 })
 
-//encrypt it with the key 'c'.
-const responseEncoded = mbencrypt.encrypt(string, 'c');
+//encrypt it with the key 'key'.
+const responseEncoded = mbencrypt.encrypt(string, 'key');
 server.send(client.ip, responseEncoded);
 //done!
 ```
@@ -28,7 +28,7 @@ server.send(client.ip, responseEncoded);
 const mbencrypt = require('mb-encrypt');
 //response from the server
 const response = request.server.response; //encoded JSON string object
-const decodedString = mbencrypt.decrypt(response, 'c');
+const decodedString = mbencrypt.decrypt(response, 'key');
 const jsonObject = JSON.parse(decodedString);
 console.log(jsonObject) 
 //the client was able to decode it with the key 'c'.
@@ -50,7 +50,7 @@ console.log(response)
 ```js
 //Let's say we have 'test, hello!' as our string and 'g' as our key.
 const string = 'test, hello!';
-const key = 'g';
+const key = 'key';
 //decoding 
 const charArray = [...string] //turn it into a character array.
 var encodedText = "";
@@ -60,7 +60,7 @@ if (letter == " ") encodedText += letter;
 if (typeof letter == "number") encodedText += letter;
 	const letterOrderInAlphabet = new String(letter).toLocaleUpperCase().charCodeAt(0) - letterOrder.a;
 	const keyOrderInAlphabet = new String(key).toLocaleUpperCase().charCodeAt(0) - letterOrder.a;
-	const resolution = (x, y) => return x - (y^2 + x + x(x + y)(x-y), y^2 - x^2 * (x-y)(x+y));
+	const resolution = (x, y) => return x - (y^2 + x + x * (x + y)(x-y), y^2 - x^2 * (x-y)(x+y));
 	const valueAsCharOrder = resolution(charAsOrder, keyAsOrder) - 26 + 65; //get the order of the first decode of the letter, delete 26, which is the amount of letters in the alphabet, and then 65, which is the charCode of A, the first letter.
 	const decode = (char, key) => char = char.order + ((char.order - (key.order * char.order)) * (key.order^2)) //decode the character from the original decoded letter to return the charOrderInAlphabet value of the original text string, and add +65 (letter A charCode)
 	const decodedCharOrderInAlphabet = decode(valueAsCharOrder, keyAsOrder); 
